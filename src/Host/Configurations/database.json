@@ -1,6 +1,10 @@
 {
   "DatabaseSettings": {
-    "DBProvider": "mssql",
-    "ConnectionString": "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=fullStackHeroDb;Integrated Security=True;MultipleActiveResultSets=True"
+    "DBProvider": "mysql", 
+    "ConnectionString": "Server=127.0.0.1;Database=tradetrax;Uid=root;Pwd=Jhp9988**;"
   }
+//  "DatabaseSettings": {
+//    "DBProvider": "mssql",
+//    "ConnectionString": "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=fullStackHeroDb;Integrated Security=True;MultipleActiveResultSets=True"
+//  }
 }
