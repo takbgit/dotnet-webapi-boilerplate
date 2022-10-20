@@ -1,3 +1,4 @@
+using System.Net.Cache;
 using FSH.WebApi.Domain.Common.Events;
 
 namespace FSH.WebApi.Application.Catalog.Products;
@@ -7,8 +8,14 @@ public class UpdateProductRequest : IRequest<Guid>
     public Guid Id { get; set; }
     public string Name { get; set; } = default!;
     public string? Description { get; set; }
-    public decimal Rate { get; set; }
+    public decimal? Rate { get; set; }
     public Guid BrandId { get; set; }
+    public Guid ProductCategoryId { get; set; }
+    public decimal WholesaleExTaxPrice { get; set; }
+    public decimal WholesaleTaxPrice { get; set; }
+    public decimal RetailExTaxPrice { get; set; }
+    public decimal RetailTaxPrice { get; set; }
+    public string? Unit { get; set; }
     public bool DeleteCurrentImage { get; set; } = false;
     public FileUploadRequest? Image { get; set; }
 }
@@ -45,7 +52,7 @@ public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest,
             ? await _file.UploadAsync<Product>(request.Image, FileType.Image, cancellationToken)
             : null;
 
-        var updatedProduct = product.Update(request.Name, request.Description, request.Rate, request.BrandId, productImagePath);
+        var updatedProduct = product.Update(request.Name, request.Description, request.Rate, request.BrandId, request.ProductCategoryId, productImagePath, request.WholesaleExTaxPrice,request.WholesaleTaxPrice, request.RetailExTaxPrice, request.RetailTaxPrice,request.Unit);
 
         // Add Domain Events to be raised after the commit
         product.DomainEvents.Add(EntityUpdatedEvent.WithEntity(product));

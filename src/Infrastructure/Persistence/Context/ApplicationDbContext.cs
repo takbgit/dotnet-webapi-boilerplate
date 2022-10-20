@@ -16,7 +16,10 @@ public class ApplicationDbContext : BaseDbContext
     }
 
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();
     public DbSet<Brand> Brands => Set<Brand>();
+    public DbSet<JobType> JobTypes => Set<JobType>();
+    public DbSet<JobTypeCategory> JobTypeCategories => Set<JobTypeCategory>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

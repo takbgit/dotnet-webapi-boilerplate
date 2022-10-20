@@ -7,7 +7,7 @@ public class JobType : AuditableEntity, IAggregateRoot
     public string? Description { get; private set; }
     public Guid JobTypeCategoryId { get; private set; }
     public virtual JobTypeCategory JobTypeCategory { get; private set; } = default!;
-    public IReadOnlyCollection<Product> Products { get; set; } = new List<Product>();
+    public IReadOnlyCollection<Product> Products { get; private set; } = new List<Product>();
 
     public JobType(string name, string? code, string? description, Guid jobTypeCategoryId)
     {

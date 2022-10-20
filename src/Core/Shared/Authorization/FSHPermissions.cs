@@ -24,6 +24,7 @@ public static class FSHResource
     public const string UserRoles = nameof(UserRoles);
     public const string Roles = nameof(Roles);
     public const string RoleClaims = nameof(RoleClaims);
+    public const string ProductCategories = nameof(ProductCategories);
     public const string Products = nameof(Products);
     public const string Brands = nameof(Brands);
     public const string JobTypeCategories = nameof(JobTypeCategories);
@@ -56,6 +57,24 @@ public static class FSHPermissions
         new("Update Products", FSHAction.Update, FSHResource.Products),
         new("Delete Products", FSHAction.Delete, FSHResource.Products),
         new("Export Products", FSHAction.Export, FSHResource.Products),
+        new("View Product Categories", FSHAction.View, FSHResource.ProductCategories, IsBasic: true),
+        new("Search Product Categories", FSHAction.Search, FSHResource.ProductCategories, IsBasic: true),
+        new("Create Product Categories", FSHAction.Create, FSHResource.ProductCategories),
+        new("Update Product Categories", FSHAction.Update, FSHResource.ProductCategories),
+        new("Delete Product Categories", FSHAction.Delete, FSHResource.ProductCategories),
+        new("Export Product Categories", FSHAction.Export, FSHResource.ProductCategories),
+        new("View Job Types", FSHAction.View, FSHResource.JobTypes, IsBasic: true),
+        new("Search Job Types", FSHAction.Search, FSHResource.JobTypes, IsBasic: true),
+        new("Create Job Types", FSHAction.Create, FSHResource.JobTypes),
+        new("Update Job Types", FSHAction.Update, FSHResource.JobTypes),
+        new("Delete Job Types", FSHAction.Delete, FSHResource.JobTypes),
+        new("Export Job Types", FSHAction.Export, FSHResource.JobTypes),
+        new("View Job Type Categories", FSHAction.View, FSHResource.JobTypeCategories, IsBasic: true),
+        new("Search Job Type Categories", FSHAction.Search, FSHResource.JobTypeCategories, IsBasic: true),
+        new("Create Job Type Categories", FSHAction.Create, FSHResource.JobTypeCategories),
+        new("Update Job Type Categories", FSHAction.Update, FSHResource.JobTypeCategories),
+        new("Delete Job Type Categories", FSHAction.Delete, FSHResource.JobTypeCategories),
+        new("Export Job Type Categories", FSHAction.Export, FSHResource.JobTypeCategories),
         new("View Brands", FSHAction.View, FSHResource.Brands, IsBasic: true),
         new("Search Brands", FSHAction.Search, FSHResource.Brands, IsBasic: true),
         new("Create Brands", FSHAction.Create, FSHResource.Brands),

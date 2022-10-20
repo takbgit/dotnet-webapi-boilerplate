@@ -4,17 +4,20 @@ namespace FSH.WebApi.Application.Catalog.JobTypes;
 
 public class ExportJobTypesRequest : BaseFilter, IRequest<Stream>
 {
-    public Guid? BrandId { get; set; }
-    public decimal? MinimumRate { get; set; }
-    public decimal? MaximumRate { get; set; }
+    public string Name { get; private set; }
+    public string? Code { get; private set; }
+    public string? Description { get; private set; }
+    public Guid JobTypeCategoryId { get; private set; }
+    public virtual JobTypeCategory JobTypeCategory { get; private set; } = default!;
+    public IReadOnlyCollection<Product> Products { get; set; } = new List<Product>();
 }
 
 public class ExportJobTypesRequestHandler : IRequestHandler<ExportJobTypesRequest, Stream>
 {
-    private readonly IReadRepository<Product> _repository;
+    private readonly IReadRepository<JobType> _repository;
     private readonly IExcelWriter _excelWriter;
 
-    public ExportJobTypesRequestHandler(IReadRepository<Product> repository, IExcelWriter excelWriter)
+    public ExportJobTypesRequestHandler(IReadRepository<JobType> repository, IExcelWriter excelWriter)
     {
         _repository = repository;
         _excelWriter = excelWriter;
@@ -30,13 +33,14 @@ public class ExportJobTypesRequestHandler : IRequestHandler<ExportJobTypesReques
     }
 }
 
-public class ExportJobTypesWithBrandsSpecification : EntitiesByBaseFilterSpec<Product, JobTypeExportDto>
+public class ExportJobTypesWithBrandsSpecification : EntitiesByBaseFilterSpec<JobType, JobTypeExportDto>
 {
     public ExportJobTypesWithBrandsSpecification(ExportJobTypesRequest request)
         : base(request) =>
         Query
-            .Include(p => p.Brand)
-            .Where(p => p.BrandId.Equals(request.BrandId!.Value), request.BrandId.HasValue)
-            .Where(p => p.Rate >= request.MinimumRate!.Value, request.MinimumRate.HasValue)
-            .Where(p => p.Rate <= request.MaximumRate!.Value, request.MaximumRate.HasValue);
+            .Include(jt => jt.Code)
+//.Where(jt => jt.Code.Equals(request.BrandId!.Value), request.BrandId.HasValue)
+//            .Where(jt => jt.Rate >= request.MinimumRate!.Value, request.MinimumRate.HasValue)
+//            .Where(jt => jt.Rate <= request.MaximumRate!.Value, request.MaximumRate.HasValue)'
+;
 }

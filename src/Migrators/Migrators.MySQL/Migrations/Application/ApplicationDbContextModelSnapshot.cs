@@ -17,7 +17,7 @@ namespace Migrators.MySQL.Migrations.Application
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("Catalog")
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("FSH.WebApi.Domain.Catalog.Brand", b =>
@@ -103,7 +103,19 @@ namespace Migrators.MySQL.Migrations.Application
                         .HasMaxLength(1024)
                         .HasColumnType("varchar(1024)");
 
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ProductCategoryId1")
+                        .HasColumnType("char(36)");
+
                     b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("RetailExTaxPrice")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("RetailTaxPrice")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("TenantId")
@@ -111,13 +123,66 @@ namespace Migrators.MySQL.Migrations.Application
                         .HasMaxLength(64)
                         .HasColumnType("varchar(64)");
 
+                    b.Property<string>("Unit")
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("WholesaleExTaxPrice")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("WholesaleTaxPrice")
+                        .HasColumnType("decimal(65,30)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
 
+                    b.HasIndex("ProductCategoryId1");
+
                     b.ToTable("Products", "Catalog");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
+                });
+
+            modelBuilder.Entity("FSH.WebApi.Domain.Catalog.ProductCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("LastModifiedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("ProductCategoryId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.ToTable("ProductCategory", "Catalog");
                 });
 
             modelBuilder.Entity("FSH.WebApi.Infrastructure.Auditing.Trail", b =>
@@ -214,18 +279,6 @@ namespace Migrators.MySQL.Migrations.Application
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Group")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("RoleId")
@@ -463,7 +516,20 @@ namespace Migrators.MySQL.Migrations.Application
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FSH.WebApi.Domain.Catalog.ProductCategory", "ProductCategory")
+                        .WithMany("Products")
+                        .HasForeignKey("ProductCategoryId1");
+
                     b.Navigation("Brand");
+
+                    b.Navigation("ProductCategory");
+                });
+
+            modelBuilder.Entity("FSH.WebApi.Domain.Catalog.ProductCategory", b =>
+                {
+                    b.HasOne("FSH.WebApi.Domain.Catalog.ProductCategory", null)
+                        .WithMany("ProductSubCategories")
+                        .HasForeignKey("ProductCategoryId");
                 });
 
             modelBuilder.Entity("FSH.WebApi.Infrastructure.Identity.ApplicationRoleClaim", b =>
@@ -515,6 +581,13 @@ namespace Migrators.MySQL.Migrations.Application
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FSH.WebApi.Domain.Catalog.ProductCategory", b =>
+                {
+                    b.Navigation("ProductSubCategories");
+
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

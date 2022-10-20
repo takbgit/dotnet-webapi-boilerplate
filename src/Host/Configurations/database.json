@@ -1,7 +1,8 @@
 {
   "DatabaseSettings": {
     "DBProvider": "mysql", 
-    "ConnectionString": "Server=127.0.0.1;Database=tradetrax;Uid=root;Pwd=Jhp9988**;"
+    "ConnectionString": "Server=127.0.0.1;Port=3307;Database=tradetrax;Uid=root;Pwd=Jhp9988**;"
+//    "ConnectionString": "Server=127.0.0.1;Database=tradetrax;Uid=root;Pwd=Jhp9988**;"
   }
 //  "DatabaseSettings": {
 //    "DBProvider": "mssql",

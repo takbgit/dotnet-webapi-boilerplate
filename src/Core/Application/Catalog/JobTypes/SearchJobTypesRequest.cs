@@ -1,7 +1,4 @@
-﻿using FSH.WebApi.Application.Catalog.JobTypeCategories;
-using FSH.WebApi.Application.Catalog.Products;
-
-namespace FSH.WebApi.Application.Catalog.JobTypes;
+﻿namespace FSH.WebApi.Application.Catalog.JobTypes;
 
 public class SearchJobTypesRequest : PaginationFilter, IRequest<PaginationResponse<JobTypeDto>>
 {
